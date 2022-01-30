@@ -25,46 +25,6 @@ picture_filepath = "events-images"
 # Random seed
 random_seed = None
 
-def check_files():
-    """Checks if category file in images are at the specified path. If not, they will be downloaded.
-    """    
-    import os, platform
-    download_command_prefix = ""
-    if platform.system() == "Linux":
-        download_command_prefix = "wget -q -O "
-    elif platform.system() == "Darwin":
-        download_command_prefix = "curl -s -o "
-
-    if picture_filepath in os.listdir():
-        # Images available
-        print("Images were found")
-    else:
-        # Images not available, searching for archive of images
-        if picture_archive_filename in os.listdir():
-            # Archive of images available
-            print("Archive of images already available")
-        else:
-            # Archive of images unavailable, downloading
-            if download_command_prefix != "":
-                print("Downloading images...", end="")
-                os.system(download_command_prefix + picture_archive_filename + " \"https://raw.githubusercontent.com/NTW-Muenster/opal-mc-ml/main/events-images.zip\"")
-                print(" done!")
-            else:
-                raise Exception("No images found and no download possible on Windows. Please download all files manually.")
-        # Unpacking images
-        print("Unpacking images...", end="")
-        os.system("unzip -q " + picture_archive_filename)
-        print(" done!")
-
-    if cat_filename in os.listdir():
-        print("Category list was found")
-    else:    
-        if download_command_prefix != "":
-            print("Downloading category list...", end="")
-            os.system(download_command_prefix + cat_filename + " \"https://raw.githubusercontent.com/NTW-Muenster/opal-mc-ml/main/events_list.csv\"")
-            print(" done!")
-        else:
-            raise Exception("No category list found and no automatic download possible on Windows. Please download all files manually.")
 
 def set_random_seeds(seed):
     """Sets random seeds for Numpy and Tensorflow. The same seed is used for both modules.
