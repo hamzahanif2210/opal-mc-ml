@@ -319,13 +319,13 @@ def sign_to_number(sign):
     Returns:
         Number: Output category.
     """    
-    if sign=="q":
+    if sign=="p":
         return 0
     elif sign=="e":
         return 1
     elif sign=="m":
         return 2
-    elif sign=="t":
+    elif sign=="n":
         return 3
     else:
         raise RuntimeError("\"" + str(sign) + "\" is not a valid identifier for decay classes")
@@ -343,13 +343,13 @@ def number_to_sign(number):
         Letter: Output category.
     """    
     if number==0:
-        return "q"
+        return "p"
     elif number==1:
         return "e"
     elif number==2:
         return "m"
     elif number==3:
-        return "t"
+        return "n"
     else:
         raise RuntimeError("\"" + str(number) + "\" is not a valid identifier for decay classes")
 
@@ -450,19 +450,19 @@ def plot_metrics(historylist, show_accuracy=True, show_loss=False):
 
 
 
-def load_events():
+def load_events1():
     """Loads all images from the folder and combines them with category information from .csv file.
-
     Returns:
         List: List of events.
     """    
     df = pd.read_csv(cat_filename, delimiter=";", header=None)
     eventlist=[]
     for filename in df[0]:
-        sign=df[df[0].str.match(filename)].iat[0,1]
+        sign=df[df[0].str.strip()==filename].iat[0,1]
         eventlist.append(Event(filename, plt.imread(picture_filepath + "/" + filename), sign))
     print(len(eventlist), "events loaded")
     return eventlist
+
 
 
 
